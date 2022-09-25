@@ -338,3 +338,6 @@ labels.txt
 
 # ignore zip files
 *.zip
+
+# ignore full docker compose, as it may contain secrets in case someone tries to commit it
+docker-compose.yaml
