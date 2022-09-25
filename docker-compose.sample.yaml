@@ -1,0 +1,17 @@
+version: "2.1"
+services:
+  cat2mqtt:
+    image: ghcr.io/nikolak/cat2mqtt:latest
+    container_name: cat2mqtt
+    environment:
+      - MODEL_PATH=/models/keras_model.h5
+      - LABELS_PATH=/models/labels.txt
+      - RTSP_URL=rtsp://12.3.4/123
+      - MQTT_HOST=mqtt.mydomain.tld
+      - MQTT_TOPIC=vision/bedroom_windowsill
+      - MQTT_USERNAME=example
+      - MQTT_PASSWORD=password
+      - SLEEP_TIME=5
+    volumes:
+      - /path/to/models:/models
+    restart: unless-stopped
