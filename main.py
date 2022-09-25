@@ -23,9 +23,6 @@ class Cat2mqtt:
         self.positive_label = os.environ.get('POSITIVE_LABEL', None)
         self.confidence_threshold = os.environ.get('CONFIDENCE_THRESHOLD', 0)
 
-        # RTSP stream config
-        self.vcap = cv2.VideoCapture(os.environ.get('RTSP_URL'), cv2.CAP_FFMPEG)
-
         # mqtt setup
         self.mqtt_topic = os.environ.get('MQTT_TOPIC')
         self.mqtt_client = mqtt.Client()
@@ -35,7 +32,8 @@ class Cat2mqtt:
         self.mqtt_client.loop_start()
 
     def get_image_array(self):
-        ret, frame = self.vcap.read()
+        vcap = cv2.VideoCapture(os.environ.get('RTSP_URL'), cv2.CAP_FFMPEG)
+        ret, frame = vcap.read()
         if ret is False:
             print("empty frame")
             return None

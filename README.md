@@ -5,6 +5,8 @@ A very minimalistic project to use keras models to detect objects in the RTSP vi
 The project motivation and goals were described here nikolak.com/cat2mqtt/ - I'm using it with custom models to detect my cat on the windowsill, but you can
 always download existing models and use it as well.
 
+The code is set to fetch a frame every 5 seconds, however constantly watching the rtsp stream and detecting objects is easily doable.
+
 # Requirements
 
 You can run this code directly on your machine, other than `requirements.txt` requirements you also need tensorflow installed - the
