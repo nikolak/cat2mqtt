@@ -64,7 +64,7 @@ class Cat2mqtt:
             self.mqtt_client.publish(self.mqtt_topic + '/confidence', confidence)
 
     def loop(self):
-        _sleep_time = os.environ.get('SLEEP_TIME', 5)
+        _sleep_time = int(os.environ.get('SLEEP_TIME', 5))
         while True:
             image_array = self.get_image_array()
             if image_array is not None:
