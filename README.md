@@ -31,7 +31,7 @@ You can take `docker-compose.sample.yaml` as your starting base.
 | MQTT_USERNAME        | MQTT username to use                                                                      | username                  | None           |
 | MQTT_PASSWORD        | Password for the above username to use                                                    | pwd                       | None           |
 | SLEEP_TIME           | Optional time to sleep between detection attempts                                         | 10                        | 5              |
-
+|SEQUENTIAL_DETECTS    | Optional after how many consequitive detects of the same object to send it to mqtt        | 5                         | 3              |
 # License
 
 MIT - see LICENSE for details

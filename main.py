@@ -21,7 +21,9 @@ class Cat2mqtt:
 
         # Detection configuration
         self.positive_label = os.environ.get('POSITIVE_LABEL', None)
-        self.confidence_threshold = os.environ.get('CONFIDENCE_THRESHOLD', 0)
+        self.confidence_threshold = float(os.environ.get('CONFIDENCE_THRESHOLD', 0))
+        self.sequential_detects = int(os.environ.get('SEQUENTIAL_DETECTS', 3))
+        self._previous_detect_state = {"label": None, "sequential_detects": 0}
 
         # mqtt setup
         self.mqtt_topic = os.environ.get('MQTT_TOPIC')
@@ -58,8 +60,18 @@ class Cat2mqtt:
         if confidence > self.confidence_threshold:
             if self.positive_label and self.positive_label != label:
                 return
-            self.mqtt_client.publish(self.mqtt_topic + '/label', label)
-            self.mqtt_client.publish(self.mqtt_topic + '/confidence', confidence)
+
+            if self._previous_detect_state["label"] == label:
+                self._previous_detect_state["sequential_detects"] += 1
+            else:
+                self._previous_detect_state["label"] = label
+                self._previous_detect_state["sequential_detects"] = 1
+
+            print("previous detect state: ", self._previous_detect_state)
+
+            if self._previous_detect_state["sequential_detects"] >= self.sequential_detects:
+                self.mqtt_client.publish(self.mqtt_topic + '/label', label)
+                self.mqtt_client.publish(self.mqtt_topic + '/confidence', confidence)
 
     def loop(self):
         _sleep_time = int(os.environ.get('SLEEP_TIME', 5))
