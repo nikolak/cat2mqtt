@@ -1,4 +1,4 @@
-paho-mqtt==1.6.1
+paho-mqtt==2.0.0
 Pillow==9.2.0
 opencv-python==4.6.0.66
 numpy==1.23.3
